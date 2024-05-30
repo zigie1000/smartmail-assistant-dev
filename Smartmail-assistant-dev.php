@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: SmartMail Assistant Developer
-Description: Developer version of the SmartMail Assistant plugin.
+Description: Developer version with extended functionalities for management and testing.
 Version: 1.0
-Author: Marco Zagato
+Author: Your Name
 */
 
 if (!defined('ABSPATH')) {
@@ -15,6 +15,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/admin-settings.php';
 require_once plugin_dir_path(__FILE__) . 'includes/api-functions.php';
 require_once plugin_dir_path(__FILE__) . 'includes/subscription-functions.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes.php';
+require_once plugin_dir_path(__FILE__) . 'src/pi-network-functions.php';
 
 // Register activation hook
 function sma_dev_activate() {
@@ -65,7 +66,5 @@ function sma_add_developer_role() {
 }
 register_activation_hook(__FILE__, 'sma_add_developer_role');
 
-// Include WooCommerce compatibility
-if (class_exists('WooCommerce')) {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-wc-gateway-pi.php';
-}
+// Include Pi Network compatibility
+require_once plugin_dir_path(__FILE__) . 'config/pi-sdk-config.php';
