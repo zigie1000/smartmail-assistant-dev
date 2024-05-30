@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: SmartMail Assistant Developer
-Description: Developer version with extended functionalities for management and testing.
+Description: Developer version with extended functionalities.
 Version: 1.0
-Author: Marco Zagato
+Author: Your Name
 */
 
 if (!defined('ABSPATH')) {
