@@ -3,7 +3,7 @@
 Plugin Name: SmartMail Assistant Developer
 Description: Developer version with extended functionalities for management and testing.
 Version: 1.0
-Author: Your Name
+Author: Marco Zagato
 */
 
 if (!defined('ABSPATH')) {
