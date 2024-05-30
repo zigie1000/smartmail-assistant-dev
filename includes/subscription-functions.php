@@ -1,18 +1,15 @@
 <?php
 
 function sma_check_subscription() {
-    if (!class_exists('WC_Subscriptions')) {
-        return false; // WooCommerce Subscriptions is not active
-    }
-
     $user_id = get_current_user_id();
-    $subscriptions = wcs_get_users_subscriptions($user_id);
+    $response = wp_remote_get("https://smartmail.store/api/check-subscription?user_id={$user_id}");
 
-    foreach ($subscriptions as $subscription) {
-        if ($subscription->has_status('active')) {
-            return true; // User has an active subscription
-        }
+    if (is_wp_error($response)) {
+        return false;
     }
 
-    return false; // No active subscription found
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body, true);
+
+    return isset($data['active']) && $data['active'] === true;
 }
