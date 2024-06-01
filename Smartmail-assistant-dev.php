@@ -4,7 +4,7 @@
  * Plugin URI: https://example.com/
  * Description: Developer version of SmartMail Assistant for managing subscriptions and API integrations.
  * Version: 1.0.0
- * Author: Your Name
+ * Author: Marco Zagato
  */
 
 // Prevent direct access
