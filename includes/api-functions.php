@@ -52,4 +52,3 @@ function fetch_data() {
 handle_request();
 
 ?>
-
