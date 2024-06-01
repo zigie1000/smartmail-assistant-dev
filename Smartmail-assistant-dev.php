@@ -1,70 +1,77 @@
 <?php
-/*
-Plugin Name: SmartMail Assistant Developer
-Description: Developer version with extended functionalities.
-Version: 1.0
-Author: Marco Zagato
-*/
+/**
+ * Plugin Name: SmartMail Assistant Developer
+ * Description: Developer version of SmartMail Assistant for managing subscriptions and API integrations.
+ * Version: 1.0.0
+ * Author: Your Name
+ */
 
+// Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
 }
 
+// Define plugin constants
+define('SMARTMAIL_DEV_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('SMARTMAIL_DEV_PLUGIN_URL', plugin_dir_url(__FILE__));
+
 // Include necessary files
-require_once plugin_dir_path(__FILE__) . 'includes/admin-settings.php';
-require_once plugin_dir_path(__FILE__) . 'includes/api-functions.php';
-require_once plugin_dir_path(__FILE__) . 'includes/subscription-functions.php';
-require_once plugin_dir_path(__FILE__) . 'includes/shortcodes.php';
-require_once plugin_dir_path(__FILE__) . 'src/pi-network-functions.php';
+require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/admin-settings.php';
+require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/api-functions.php';
 
-// Register activation hook
-function sma_dev_activate() {
-    sma_add_developer_role();
-    update_option('sma_free_features', array('email_categorization', 'priority_inbox'));
-    update_option('sma_pro_features', array('auto_responses', 'email_summarization', 'meeting_scheduler', 'follow_up_reminders', 'sentiment_analysis', 'email_templates'));
+// Activation hook
+function smartmail_dev_activate() {
+    // Activation code here
 }
-register_activation_hook(__FILE__, 'sma_dev_activate');
+register_activation_hook(__FILE__, 'smartmail_dev_activate');
 
-// Register deactivation hook
-function sma_dev_deactivate() {
-    delete_option('sma_free_features');
-    delete_option('sma_pro_features');
+// Deactivation hook
+function smartmail_dev_deactivate() {
+    // Deactivation code here
 }
-register_deactivation_hook(__FILE__, 'sma_dev_deactivate');
+register_deactivation_hook(__FILE__, 'smartmail_dev_deactivate');
 
-// Enqueue scripts and styles
-function sma_dev_enqueue_scripts() {
-    wp_enqueue_style('sma-styles', plugin_dir_url(__FILE__) . 'assets/css/style.css');
-    wp_enqueue_script('sma-scripts', plugin_dir_url(__FILE__) . 'assets/js/script.js', array('jquery'), null, true);
+// Admin menu
+function smartmail_dev_admin_menu() {
+    add_menu_page(
+        'SmartMail Assistant Dev',
+        'SmartMail Dev',
+        'manage_options',
+        'smartmail-dev',
+        'smartmail_dev_admin_page',
+        'dashicons-admin-generic',
+        90
+    );
 }
-add_action('wp_enqueue_scripts', 'sma_dev_enqueue_scripts');
+add_action('admin_menu', 'smartmail_dev_admin_menu');
 
-// Register custom page templates
-function sma_dev_register_templates($templates) {
-    $templates['templates/admin-dashboard-page.php'] = 'Admin Dashboard';
-    $templates['templates/test-page.php'] = 'Test Page';
-    return $templates;
+// Admin page content
+function smartmail_dev_admin_page() {
+    ?>
+    <div class="wrap">
+        <h1>SmartMail Assistant Developer</h1>
+        <form method="post" action="options.php">
+            <?php
+            settings_fields('smartmail_dev_settings');
+            do_settings_sections('smartmail-dev');
+            submit_button();
+            ?>
+        </form>
+    </div>
+    <?php
 }
-add_filter('theme_page_templates', 'sma_dev_register_templates');
 
-function sma_dev_load_template($template) {
-    if (get_page_template_slug() == 'templates/admin-dashboard-page.php') {
-        $template = plugin_dir_path(__FILE__) . 'templates/admin-dashboard-page.php';
-    } elseif (get_page_template_slug() == 'templates/test-page.php') {
-        $template = plugin_dir_path(__FILE__) . 'templates/test-page.php';
-    }
-    return $template;
+// Register settings
+function smartmail_dev_register_settings() {
+    register_setting('smartmail_dev_settings', 'smartmail_dev_api_key');
+    add_settings_section('smartmail_dev_section', 'API Settings', null, 'smartmail-dev');
+    add_settings_field('smartmail_dev_api_key', 'API Key', 'smartmail_dev_api_key_callback', 'smartmail-dev', 'smartmail_dev_section');
 }
-add_filter('template_include', 'sma_dev_load_template');
+add_action('admin_init', 'smartmail_dev_register_settings');
 
-// Add Developer Role
-function sma_add_developer_role() {
-    add_role('developer', 'Developer', array(
-        'read' => true,
-        'manage_options' => true,
-    ));
+// API Key field callback
+function smartmail_dev_api_key_callback() {
+    $api_key = get_option('smartmail_dev_api_key');
+    echo '<input type="text" name="smartmail_dev_api_key" value="' . esc_attr($api_key) . '" class="regular-text">';
 }
-register_activation_hook(__FILE__, 'sma_add_developer_role');
-
-// Include Pi Network compatibility
-require_once plugin_dir_path(__FILE__) . 'config/pi-sdk-config.php';
+?>
