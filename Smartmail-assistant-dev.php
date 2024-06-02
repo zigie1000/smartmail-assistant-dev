@@ -7,16 +7,6 @@
  * Author: Marco Zagato
  */
 
-// Proper initialization function
-function smartmail_assistant_init() {
-    // Add your initialization code here
-    error_log('Smartmail Assistant initialized');
-}
-add_action('plugins_loaded', 'smartmail_assistant_init');
-?>
-
-
-
 // Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
@@ -33,12 +23,14 @@ require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/api-functions.php';
 // Activation hook
 function smartmail_dev_activate() {
     // Activation code here
+    error_log('SmartMail Assistant Developer Plugin Activated');
 }
 register_activation_hook(__FILE__, 'smartmail_dev_activate');
 
 // Deactivation hook
 function smartmail_dev_deactivate() {
     // Deactivation code here
+    error_log('SmartMail Assistant Developer Plugin Deactivated');
 }
 register_deactivation_hook(__FILE__, 'smartmail_dev_deactivate');
 
@@ -85,4 +77,11 @@ function smartmail_dev_api_key_callback() {
     $api_key = get_option('smartmail_dev_api_key');
     echo '<input type="text" name="smartmail_dev_api_key" value="' . esc_attr($api_key) . '" class="regular-text">';
 }
+
+// Proper initialization function
+function smartmail_assistant_init() {
+    // Add your initialization code here
+    error_log('SmartMail Assistant Developer Plugin Initialized');
+}
+add_action('plugins_loaded', 'smartmail_assistant_init');
 ?>
