@@ -1,15 +1,14 @@
 <?php
-/**
- * Plugin Name: SmartMail Assistant Dev
- * Plugin URI: https://example.com/
- * Description: Developer version of SmartMail Assistant for testing new features.
- * Version: 1.0.0
- * Author: Marco Zagato
- */
+/*
+Plugin Name: SmartMail Assistant Dev
+Description: Developer plugin for SmartMail Assistant
+Version: 1.0
+Author: Your Name
+Author URI: https://yourwebsite.com
+*/
 
-// Prevent direct access
 if (!defined('ABSPATH')) {
-    exit;
+    exit; // Exit if accessed directly
 }
 
 // Define plugin constants
@@ -46,11 +45,10 @@ function smartmail_dev_admin_menu() {
 }
 add_action('admin_menu', 'smartmail_dev_admin_menu');
 
-// Admin page content
 function smartmail_dev_admin_page() {
     ?>
     <div class="wrap">
-        <h1>SmartMail Assistant Dev</h1>
+        <h1>SmartMail Assistant Dev Settings</h1>
         <form method="post" action="options.php">
             <?php
             settings_fields('smartmail_dev_settings');
