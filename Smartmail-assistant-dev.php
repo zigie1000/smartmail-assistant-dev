@@ -7,6 +7,16 @@
  * Author: Marco Zagato
  */
 
+// Proper initialization function
+function smartmail_assistant_init() {
+    // Add your initialization code here
+    error_log('Smartmail Assistant initialized');
+}
+add_action('plugins_loaded', 'smartmail_assistant_init');
+?>
+
+
+
 // Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
