@@ -4,7 +4,7 @@ Plugin Name: SmartMail Assistant Dev
 Description: Developer plugin for SmartMail Assistant
 Version: 1.0
 Author: Marco Zagato
-Author URI: https://yourwebsite.com
+Author URI: https://smartmail.store
 */
 
 if (!defined('ABSPATH')) {
