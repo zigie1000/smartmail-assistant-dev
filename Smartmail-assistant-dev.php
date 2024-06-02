@@ -3,7 +3,7 @@
 Plugin Name: SmartMail Assistant Dev
 Description: Developer plugin for SmartMail Assistant
 Version: 1.0
-Author: Marco Zagato
+Author: Marco Z
 Author URI: https://smartmail.store
 */
 
@@ -32,6 +32,7 @@ function smartmail_dev_deactivate() {
 register_deactivation_hook(__FILE__, 'smartmail_dev_deactivate');
 
 // Admin menu
+add_action('admin_menu', 'smartmail_dev_admin_menu');
 function smartmail_dev_admin_menu() {
     add_menu_page(
         'SmartMail Assistant Dev',
@@ -40,10 +41,9 @@ function smartmail_dev_admin_menu() {
         'smartmail-dev',
         'smartmail_dev_admin_page',
         'dashicons-admin-generic',
-        90
+        6
     );
 }
-add_action('admin_menu', 'smartmail_dev_admin_menu');
 
 function smartmail_dev_admin_page() {
     ?>
@@ -61,14 +61,13 @@ function smartmail_dev_admin_page() {
 }
 
 // Register settings
+add_action('admin_init', 'smartmail_dev_register_settings');
 function smartmail_dev_register_settings() {
     register_setting('smartmail_dev_settings', 'smartmail_dev_api_key');
     add_settings_section('smartmail_dev_section', 'API Settings', null, 'smartmail-dev');
     add_settings_field('smartmail_dev_api_key', 'API Key', 'smartmail_dev_api_key_callback', 'smartmail-dev', 'smartmail_dev_section');
 }
-add_action('admin_init', 'smartmail_dev_register_settings');
 
-// API Key field callback
 function smartmail_dev_api_key_callback() {
     $api_key = get_option('smartmail_dev_api_key');
     echo '<input type="text" name="smartmail_dev_api_key" value="' . esc_attr($api_key) . '" class="regular-text">';
