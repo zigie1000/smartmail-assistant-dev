@@ -3,7 +3,7 @@
 Plugin Name: SmartMail Assistant Dev
 Description: Developer plugin for SmartMail Assistant
 Version: 1.0
-Author: Marco Z
+Author: Marco Zagato
 Author URI: https://smartmail.store
 */
 
