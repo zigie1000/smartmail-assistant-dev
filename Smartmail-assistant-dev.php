@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: SmartMail Assistant Developer
+ * Plugin Name: SmartMail Assistant Dev
  * Plugin URI: https://example.com/
- * Description: Developer version of SmartMail Assistant for managing subscriptions and API integrations.
+ * Description: Developer version of SmartMail Assistant for testing new features.
  * Version: 1.0.0
  * Author: Marco Zagato
  */
@@ -23,14 +23,12 @@ require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/api-functions.php';
 // Activation hook
 function smartmail_dev_activate() {
     // Activation code here
-    error_log('SmartMail Assistant Developer Plugin Activated');
 }
 register_activation_hook(__FILE__, 'smartmail_dev_activate');
 
 // Deactivation hook
 function smartmail_dev_deactivate() {
     // Deactivation code here
-    error_log('SmartMail Assistant Developer Plugin Deactivated');
 }
 register_deactivation_hook(__FILE__, 'smartmail_dev_deactivate');
 
@@ -52,7 +50,7 @@ add_action('admin_menu', 'smartmail_dev_admin_menu');
 function smartmail_dev_admin_page() {
     ?>
     <div class="wrap">
-        <h1>SmartMail Assistant Developer</h1>
+        <h1>SmartMail Assistant Dev</h1>
         <form method="post" action="options.php">
             <?php
             settings_fields('smartmail_dev_settings');
@@ -77,11 +75,4 @@ function smartmail_dev_api_key_callback() {
     $api_key = get_option('smartmail_dev_api_key');
     echo '<input type="text" name="smartmail_dev_api_key" value="' . esc_attr($api_key) . '" class="regular-text">';
 }
-
-// Proper initialization function
-function smartmail_assistant_init() {
-    // Add your initialization code here
-    error_log('SmartMail Assistant Developer Plugin Initialized');
-}
-add_action('plugins_loaded', 'smartmail_assistant_init');
 ?>
