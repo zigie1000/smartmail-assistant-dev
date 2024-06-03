@@ -1,14 +1,16 @@
 <?php
-/*
-Plugin Name: SmartMail Assistant Dev
-Description: Developer plugin for SmartMail Assistant
-Version: 1.0
-Author: Marco Zagato
-Author URI: https://smartmail.store
-*/
+/**
+ * Plugin Name: SmartMail Assistant Dev
+ * Description: A WordPress plugin for SmartMail Assistant Dev functionality.
+ * Version: 1.0.0
+ * Author: Your Name
+ * Author URI: https://example.com
+ * Plugin URI: https://example.com
+ */
 
+// Prevent direct access to the file
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+    exit;
 }
 
 // Define plugin constants
@@ -32,7 +34,6 @@ function smartmail_dev_deactivate() {
 register_deactivation_hook(__FILE__, 'smartmail_dev_deactivate');
 
 // Admin menu
-add_action('admin_menu', 'smartmail_dev_admin_menu');
 function smartmail_dev_admin_menu() {
     add_menu_page(
         'SmartMail Assistant Dev',
@@ -44,32 +45,35 @@ function smartmail_dev_admin_menu() {
         6
     );
 }
+add_action('admin_menu', 'smartmail_dev_admin_menu');
 
+// Admin page callback
 function smartmail_dev_admin_page() {
-    ?>
-    <div class="wrap">
-        <h1>SmartMail Assistant Dev Settings</h1>
-        <form method="post" action="options.php">
-            <?php
-            settings_fields('smartmail_dev_settings');
-            do_settings_sections('smartmail-dev');
-            submit_button();
-            ?>
-        </form>
-    </div>
-    <?php
+    echo '<div class="wrap">';
+    echo '<h1>SmartMail Assistant Dev</h1>';
+    echo '<form method="post" action="options.php">';
+    settings_fields('smartmail_dev_options_group');
+    do_settings_sections('smartmail-dev');
+    submit_button();
+    echo '</form>';
+    echo '</div>';
 }
 
 // Register settings
-add_action('admin_init', 'smartmail_dev_register_settings');
 function smartmail_dev_register_settings() {
-    register_setting('smartmail_dev_settings', 'smartmail_dev_api_key');
-    add_settings_section('smartmail_dev_section', 'API Settings', null, 'smartmail-dev');
-    add_settings_field('smartmail_dev_api_key', 'API Key', 'smartmail_dev_api_key_callback', 'smartmail-dev', 'smartmail_dev_section');
+    register_setting('smartmail_dev_options_group', 'smartmail_dev_options');
+    add_settings_section('smartmail_dev_main_section', 'Main Settings', 'smartmail_dev_section_callback', 'smartmail-dev');
+    add_settings_field('smartmail_dev_field', 'API Key', 'smartmail_dev_field_callback', 'smartmail-dev', 'smartmail_dev_main_section');
+}
+add_action('admin_init', 'smartmail_dev_register_settings');
+
+// Section callback
+function smartmail_dev_section_callback() {
+    echo 'Enter your settings below:';
 }
 
-function smartmail_dev_api_key_callback() {
-    $api_key = get_option('smartmail_dev_api_key');
-    echo '<input type="text" name="smartmail_dev_api_key" value="' . esc_attr($api_key) . '" class="regular-text">';
+// Field callback
+function smartmail_dev_field_callback() {
+    $options = get_option('smartmail_dev_options');
+    echo '<input type="text" name="smartmail_dev_options[api_key]" value="' . esc_attr($options['api_key']) . '">';
 }
-?>
