@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: SmartMail Assistant Dev
- * Plugin URI: https://example.com
+ * Plugin URI: https://smartmail.store
  * Description: Developer tools for SmartMail Assistant.
  * Version: 1.0.0
- * Author: Your Name
+ * Author: Marco Zagato
  * Author URI: https://smartmail.store
  * License: MIT
  */
