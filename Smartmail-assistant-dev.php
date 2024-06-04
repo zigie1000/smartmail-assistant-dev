@@ -26,13 +26,21 @@ require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/subscription-functions.php';
 
 // Activation hook
 function smartmail_dev_activate() {
-    // Activation code here
+    try {
+        // Activation code here
+    } catch (Exception $e) {
+        error_log('SmartMail Assistant Dev activation error: ' . $e->getMessage());
+    }
 }
 register_activation_hook(__FILE__, 'smartmail_dev_activate');
 
 // Deactivation hook
 function smartmail_dev_deactivate() {
-    // Deactivation code here
+    try {
+        // Deactivation code here
+    } catch (Exception $e) {
+        error_log('SmartMail Assistant Dev deactivation error: ' . $e->getMessage());
+    }
 }
 register_deactivation_hook(__FILE__, 'smartmail_dev_deactivate');
 
