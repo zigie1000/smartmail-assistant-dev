@@ -1,17 +1,30 @@
 <?php
-
-function sma_email_summarization_shortcode($atts, $content = null) {
-    if (!sma_check_subscription()) {
-        return '<div class="error">This feature is available for subscribed users only.</div>';
-    }
-
-    $email_content = $content; // The email content to summarize
-    $api_response = sma_summarize_email($email_content);
-
-    if (is_array($api_response) && isset($api_response['choices'][0]['text'])) {
-        return '<div class="email-summary">' . esc_html($api_response['choices'][0]['text']) . '</div>';
-    } else {
-        return '<div class="error">Failed to summarize email.</div>';
-    }
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly.
 }
-add_shortcode('sma_email_summarization', 'sma_email_summarization_shortcode');
+
+function sma_display_email_categorization() {
+    if (current_user_can('sma_use_pro_features')) {
+        return '<div class="sma-feature">Email Categorization is enabled for Pro users.</div>';
+    }
+    return '<div class="sma-feature">Email Categorization is available for Pro users only. <a href="/subscribe">Subscribe now</a></div>';
+}
+add_shortcode('sma_email_categorization', 'sma_display_email_categorization');
+
+function sma_display_priority_inbox() {
+    if (current_user_can('sma_use_pro_features')) {
+        return '<div class="sma-feature">Priority Inbox is enabled for Pro users.</div>';
+    }
+    return '<div class="sma-feature">Priority Inbox is available for Pro users only. <a href="/subscribe">Subscribe now</a></div>';
+}
+add_shortcode('sma_priority_inbox', 'sma_display_priority_inbox');
+
+function sma_display_email_summarization($atts, $content = null) {
+    if (current_user_can('sma_use_pro_features')) {
+        $summary = sma_summarize_email($content);
+        return '<div class="sma-feature">Email Summary: ' . esc_html($summary) . '</div>';
+    }
+    return '<div class="sma-feature">Email Summarization is available for Pro users only. <a href="/subscribe">Subscribe now</a></div>';
+}
+add_shortcode('sma_email_summarization', 'sma_display_email_summarization');
+?>
