@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: SmartMail Assistant Dev
- * Plugin URI: https://smartmail.store
- * Description: Developer tools for SmartMail Assistant.
+ * Plugin URI: https://example.com
+ * Description: A developer plugin to manage SmartMail functionalities.
  * Version: 1.0.0
- * Author: Marco Zagato
- * Author URI: https://smartmail.store
+ * Author: Your Name
+ * Author URI: https://example.com
  * License: MIT
  */
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
@@ -20,6 +20,9 @@ define('SMARTMAIL_DEV_PLUGIN_URL', plugin_dir_url(__FILE__));
 // Include necessary files
 require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/admin-settings.php';
 require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/api-functions.php';
+require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/class-wc-gateway-pi.php';
+require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/shortcodes.php';
+require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/subscription-functions.php';
 
 // Activation hook
 function smartmail_dev_activate() {
@@ -79,3 +82,4 @@ function smartmail_dev_option_name_cb() {
     $setting = get_option('smartmail_dev_option_name');
     echo "<input type='text' name='smartmail_dev_option_name' value='" . esc_attr($setting) . "'>";
 }
+?>
