@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: SmartMail Assistant Dev
- * Plugin URI: https://smarmail.store
- * Description: A development plugin to manage SmartMail functionality.
+ * Plugin URI: https://example.com
+ * Description: Developer tools for SmartMail Assistant.
  * Version: 1.0.0
- * Author: Marco Zagato
+ * Author: Your Name
  * Author URI: https://smartmail.store
  * License: MIT
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
