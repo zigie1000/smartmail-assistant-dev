@@ -24,7 +24,8 @@ $includes = [
     'includes/admin-settings.php',
     'includes/api-functions.php',
     'includes/shortcodes.php',
-    'includes/subscription-functions.php'
+    'includes/subscription-functions.php',
+    'includes/pi-functions.php'
 ];
 
 foreach ($includes as $file) {
