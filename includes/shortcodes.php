@@ -9,7 +9,9 @@ function sma_display_email_categorization() {
     }
     return '<div class="sma-feature">Email Categorization is available for Pro users only. <a href="/subscribe">Subscribe now</a></div>';
 }
-add_shortcode('sma_email_categorization', 'sma_display_email_categorization');
+add_shortcode('
+
+sma_email_categorization', 'sma_display_email_categorization');
 
 function sma_display_priority_inbox() {
     if (current_user_can('sma_use_pro_features')) {
