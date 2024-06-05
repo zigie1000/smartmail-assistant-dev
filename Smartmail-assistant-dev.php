@@ -113,7 +113,9 @@ function smartmail_dev_admin_page() {
             <?php submit_button('Create Test Page'); ?>
         </form>
         <?php
-        if (isset($_POST['smartmail_dev_create_test_page']) && check_admin_referer()) {
+        if (isset($_
+
+POST['smartmail_dev_create_test_page']) && check_admin_referer()) {
             smartmail_dev_create_test_page();
         }
         ?>
