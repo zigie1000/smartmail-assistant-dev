@@ -17,6 +17,20 @@ if (!defined('ABSPATH')) {
 define('SMARTMAIL_DEV_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('SMARTMAIL_DEV_PLUGIN_URL', plugin_dir_url(__FILE__));
 
+// Check for required dependencies
+function smartmail_dev_check_dependencies() {
+    if (!function_exists('wp_remote_get')) {
+        deactivate_plugins(plugin_basename(__FILE__));
+        wp_die('This plugin requires the "wp_remote_get" function. Please ensure your WordPress installation is up to date.');
+    }
+
+    if (!class_exists('WooCommerce')) {
+        deactivate_plugins(plugin_basename(__FILE__));
+        wp_die('This plugin requires WooCommerce to be installed and activated.');
+    }
+}
+add_action('admin_init', 'smartmail_dev_check_dependencies');
+
 // Include necessary files
 require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/admin-settings.php';
 require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/api-functions.php';
