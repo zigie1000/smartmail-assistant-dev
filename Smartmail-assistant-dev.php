@@ -41,9 +41,11 @@ require_once SMARTMAIL_DEV_PLUGIN_PATH . 'includes/subscription-functions.php';
 // Activation hook
 function smartmail_dev_activate() {
     try {
-        // Activation code here
+        // Add activation code here
+        error_log('SmartMail Assistant Dev plugin activated successfully.');
     } catch (Exception $e) {
         error_log('SmartMail Assistant Dev activation error: ' . $e->getMessage());
+        wp_die('SmartMail Assistant Dev activation error: ' . $e->getMessage());
     }
 }
 register_activation_hook(__FILE__, 'smartmail_dev_activate');
@@ -51,9 +53,11 @@ register_activation_hook(__FILE__, 'smartmail_dev_activate');
 // Deactivation hook
 function smartmail_dev_deactivate() {
     try {
-        // Deactivation code here
+        // Add deactivation code here
+        error_log('SmartMail Assistant Dev plugin deactivated successfully.');
     } catch (Exception $e) {
         error_log('SmartMail Assistant Dev deactivation error: ' . $e->getMessage());
+        wp_die('SmartMail Assistant Dev deactivation error: ' . $e->getMessage());
     }
 }
 register_deactivation_hook(__FILE__, 'smartmail_dev_deactivate');
