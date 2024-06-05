@@ -19,14 +19,20 @@ define('SMARTMAIL_DEV_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Check for required dependencies
 function smartmail_dev_check_dependencies() {
+    $missing_dependencies = array();
+
     if (!function_exists('wp_remote_get')) {
-        deactivate_plugins(plugin_basename(__FILE__));
-        wp_die('This plugin requires the "wp_remote_get" function. Please ensure your WordPress installation is up to date.');
+        $missing_dependencies[] = 'wp_remote_get function (WordPress core)';
     }
 
     if (!class_exists('WooCommerce')) {
+        $missing_dependencies[] = 'WooCommerce';
+    }
+
+    if (!empty($missing_dependencies)) {
         deactivate_plugins(plugin_basename(__FILE__));
-        wp_die('This plugin requires WooCommerce to be installed and activated.');
+        $message = 'The following dependencies are missing: ' . implode(', ', $missing_dependencies);
+        wp_die($message);
     }
 }
 add_action('admin_init', 'smartmail_dev_check_dependencies');
@@ -88,8 +94,46 @@ function smartmail_dev_admin_page() {
             submit_button();
             ?>
         </form>
+        <h2>Dependency Check</h2>
+        <?php
+        $dependencies = smartmail_dev_check_all_dependencies();
+        if (empty($dependencies)) {
+            echo '<p>All dependencies are met.</p>';
+        } else {
+            echo '<p>Missing dependencies:</p><ul>';
+            foreach ($dependencies as $dependency) {
+                echo '<li>' . esc_html($dependency) . '</li>';
+            }
+            echo '</ul>';
+        }
+        ?>
+        <h2>Template Management</h2>
+        <form method="post">
+            <input type="hidden" name="smartmail_dev_create_test_page" value="1">
+            <?php submit_button('Create Test Page'); ?>
+        </form>
+        <?php
+        if (isset($_POST['smartmail_dev_create_test_page']) && check_admin_referer()) {
+            smartmail_dev_create_test_page();
+        }
+        ?>
     </div>
     <?php
+}
+
+// Check all dependencies function
+function smartmail_dev_check_all_dependencies() {
+    $missing_dependencies = array();
+
+    if (!function_exists('wp_remote_get')) {
+        $missing_dependencies[] = 'wp_remote_get function (WordPress core)';
+    }
+
+    if (!class_exists('WooCommerce')) {
+        $missing_dependencies[] = 'WooCommerce';
+    }
+
+    return $missing_dependencies;
 }
 
 // Register settings
@@ -107,5 +151,24 @@ function smartmail_dev_main_section_cb() {
 function smartmail_dev_option_name_cb() {
     $setting = get_option('smartmail_dev_option_name');
     echo "<input type='text' name='smartmail_dev_option_name' value='" . esc_attr($setting) . "'>";
+}
+
+// Function to create a test page for developers
+function smartmail_dev_create_test_page() {
+    $post_data = array(
+        'post_title'    => 'SmartMail Assistant Dev Test Page',
+        'post_content'  => 'This is a test page for SmartMail Assistant Dev.',
+        'post_status'   => 'publish',
+        'post_author'   => get_current_user_id(),
+        'post_type'     => 'page',
+    );
+
+    $post_id = wp_insert_post($post_data);
+
+    if ($post_id) {
+        echo '<p>Test page created successfully. <a href="' . get_permalink($post_id) . '">View Page</a></p>';
+    } else {
+        echo '<p>Failed to create test page.</p>';
+    }
 }
 ?>
